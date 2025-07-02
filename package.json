@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "An interactive NodeJS CLI Tool for interacting with Blaze Engineer API.",
   "main": "blazeEngineerCLI.js",
+  "bin": {
+    "blaze-engineer-cli": "./blazeEngineerCLI.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/shanelarson/blaze-engineer-cli/issues"
   },
-  "homepage": "https://github.com/shanelarson/blaze-engineer-cli#readme"
+  "homepage": "https://github.com/shanelarson/blaze-engineer-cli#readme",
+  "dependencies": {
+    "blaze-engineer": "^1.0.2"
+  }
 }
