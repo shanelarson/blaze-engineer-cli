@@ -1,6 +1,6 @@
 {
   "name": "blaze-engineer-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An interactive NodeJS CLI Tool for interacting with Blaze Engineer API.",
   "main": "blazeEngineerCLI.js",
   "bin": {
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/shanelarson/blaze-engineer-cli#readme",
   "dependencies": {
-    "blaze-engineer": "^1.0.2"
+    "blaze-engineer": "^1.0.2",
+    "prompt-sync": "^4.2.0"
   }
 }

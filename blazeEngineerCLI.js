@@ -134,12 +134,27 @@ function showMenu (items) {
 }
 
 async function promptField (label, optional = false) {
+    if (label.toLowerCase().includes('password')) {
+        // Hide password input
+        return await promptHidden(label, optional);
+    }
     const ans = await rl.question(`${label}: `);
     if (!ans.trim()) {
         if (optional) return undefined;
         throw new Error('Cancelled');
     }
     return ans.trim();
+}
+
+async function promptHidden(label, optional = false) {
+    const promptSync = (await import('prompt-sync')).default;
+    const prompt = promptSync({ sigint: true });
+    let answer = prompt.hide(`${label}: `);
+    if (!answer.trim()) {
+        if (optional) return undefined;
+        throw new Error('Cancelled');
+    }
+    return answer.trim();
 }
 
 async function doWithFields (fn, fieldDefs) {
