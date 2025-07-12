@@ -28,7 +28,7 @@ const unauthorizedMenu = [
 
 const authorizedMenu = [
     { label: 'Add Key',            action: () => doWithFields(
-        ({ name, key }) => api.addKey({ name, key }), [
+        ({ name, key }) => api.addKey(name, key), [
             ['name', 'Key nickname'],
             ['key',  'Private SSH key'],
         ]) },
@@ -39,7 +39,7 @@ const authorizedMenu = [
     { label: 'List Keys',          action: () => api.listKeys() },
 
     { label: 'Add Repo',           action: () => doWithFields(
-        ({ name, sshURL, keyID }) => api.addRepo({ name, sshURL, keyID }), [
+        ({ name, sshURL, keyID }) => api.addRepo(name, sshURL, keyID), [
             ['name',   'Repo nickname'],
             ['sshURL', 'Repo SSH URL'],
             ['keyID',  'Key ID to use'],
@@ -51,7 +51,7 @@ const authorizedMenu = [
     { label: 'List Repos',         action: () => api.listRepos() },
 
     { label: 'Run Job',            action: () => doWithFields(
-        ({ repoID, branch, task, webhook }) => api.runJob({ repoID, branch, task, webhook }), [
+        ({ repoID, branch, task, webhook }) => api.runJob(repoID, branch, task, webhook), [
             ['repoID', 'Repo ID'],
             ['branch', 'Branch'],
             ['task',   'Task'],
@@ -144,6 +144,21 @@ async function promptField (label, optional = false) {
     if (label.toLowerCase().includes('password')) {
         // Hide password input
         return await promptHidden(label, optional);
+    }
+    if (label === 'Private SSH key') {
+        console.log('Paste your private SSH key below. Type END on a new line when finished:');
+        let lines = [];
+        while (true) {
+            const line = await rl.question('');
+            if (line.trim() === 'END') break;
+            lines.push(line);
+        }
+        const ans = lines.join('\n');
+        if (!ans.trim()) {
+            if (optional) return undefined;
+            throw new Error('Cancelled');
+        }
+        return ans;
     }
     const ans = await rl.question(`${label}: `);
     if (!ans.trim()) {
