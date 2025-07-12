@@ -27,39 +27,46 @@ const unauthorizedMenu = [
 ];
 
 const authorizedMenu = [
-    { label: 'Add Key',            action: () => doWithFields(api.addKey, [
+    { label: 'Add Key',            action: () => doWithFields(
+        ({ name, key }) => api.addKey({ name, key }), [
             ['name', 'Key nickname'],
             ['key',  'Private SSH key'],
         ]) },
-    { label: 'Remove Key',         action: () => doWithFields(api.removeKey, [
+    { label: 'Remove Key',         action: () => doWithFields(
+        ({ id }) => api.removeKey(id), [
             ['id', 'Key ID'],
         ]) },
     { label: 'List Keys',          action: () => api.listKeys() },
 
-    { label: 'Add Repo',           action: () => doWithFields(api.addRepo, [
+    { label: 'Add Repo',           action: () => doWithFields(
+        ({ name, sshURL, keyID }) => api.addRepo({ name, sshURL, keyID }), [
             ['name',   'Repo nickname'],
             ['sshURL', 'Repo SSH URL'],
             ['keyID',  'Key ID to use'],
         ]) },
-    { label: 'Remove Repo',        action: () => doWithFields(api.removeRepo, [
+    { label: 'Remove Repo',        action: () => doWithFields(
+        ({ id }) => api.removeRepo(id), [
             ['id', 'Repo ID'],
         ]) },
     { label: 'List Repos',         action: () => api.listRepos() },
 
     { label: 'Run Job',            action: () => doWithFields(
-            (obj) => api.runJob(obj), [
-                ['repoID', 'Repo ID'],
-                ['branch', 'Branch'],
-                ['task',   'Task'],
-                ['webhook', 'Webhook (optional)', true],
-            ]) },
-    { label: 'Stop Job',           action: () => doWithFields(api.stopJob, [
+        ({ repoID, branch, task, webhook }) => api.runJob({ repoID, branch, task, webhook }), [
+            ['repoID', 'Repo ID'],
+            ['branch', 'Branch'],
+            ['task',   'Task'],
+            ['webhook', 'Webhook (optional)', true],
+        ]) },
+    { label: 'Stop Job',           action: () => doWithFields(
+        ({ jobID }) => api.stopJob(jobID), [
             ['jobID', 'Job ID'],
         ]) },
-    { label: 'Rerun Job',          action: () => doWithFields(api.rerunJob, [
+    { label: 'Rerun Job',          action: () => doWithFields(
+        ({ jobID }) => api.rerunJob(jobID), [
             ['jobID', 'Job ID'],
         ]) },
-    { label: 'View Job',           action: () => doWithFields(api.viewJob, [
+    { label: 'View Job',           action: () => doWithFields(
+        ({ id }) => api.viewJob(id), [
             ['id', 'Job ID'],
         ]) },
     { label: 'List Jobs',          action: () => api.listJobs() },
