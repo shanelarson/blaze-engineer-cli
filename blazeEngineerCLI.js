@@ -27,41 +27,48 @@ const unauthorizedMenu = [
 ];
 
 const authorizedMenu = [
-    { label: 'Add Key',            action: () => doWithFields(api.addKey, [
-            ['name', 'Key nickname'],
-            ['key',  'Private SSH key'],
-        ]) },
-    { label: 'Remove Key',         action: () => doWithFields(api.removeKey, [
-            ['id', 'Key ID'],
-        ]) },
+    { label: 'Add Key',            action: () => doWithFields(
+            ({ name, key }) => api.addKey(name, key), [
+                ['name', 'Key nickname'],
+                ['key',  'Private SSH key'],
+            ]) },
+    { label: 'Remove Key',         action: () => doWithFields(
+            ({ id }) => api.removeKey(id), [
+                ['id', 'Key ID'],
+            ]) },
     { label: 'List Keys',          action: () => api.listKeys() },
 
-    { label: 'Add Repo',           action: () => doWithFields(api.addRepo, [
-            ['name',   'Repo nickname'],
-            ['sshURL', 'Repo SSH URL'],
-            ['keyID',  'Key ID to use'],
-        ]) },
-    { label: 'Remove Repo',        action: () => doWithFields(api.removeRepo, [
-            ['id', 'Repo ID'],
-        ]) },
+    { label: 'Add Repo',           action: () => doWithFields(
+            ({ name, sshURL, keyID }) => api.addRepo(name, sshURL, keyID), [
+                ['name',   'Repo nickname'],
+                ['sshURL', 'Repo SSH URL'],
+                ['keyID',  'Key ID to use'],
+            ]) },
+    { label: 'Remove Repo',        action: () => doWithFields(
+            ({ id }) => api.removeRepo(id), [
+                ['id', 'Repo ID'],
+            ]) },
     { label: 'List Repos',         action: () => api.listRepos() },
 
     { label: 'Run Job',            action: () => doWithFields(
-            (obj) => api.runJob(obj), [
+            ({ repoID, branch, task, webhook }) => api.runJob(repoID, branch, task, webhook), [
                 ['repoID', 'Repo ID'],
                 ['branch', 'Branch'],
                 ['task',   'Task'],
                 ['webhook', 'Webhook (optional)', true],
             ]) },
-    { label: 'Stop Job',           action: () => doWithFields(api.stopJob, [
-            ['jobID', 'Job ID'],
-        ]) },
-    { label: 'Rerun Job',          action: () => doWithFields(api.rerunJob, [
-            ['jobID', 'Job ID'],
-        ]) },
-    { label: 'View Job',           action: () => doWithFields(api.viewJob, [
-            ['id', 'Job ID'],
-        ]) },
+    { label: 'Stop Job',           action: () => doWithFields(
+            ({ jobID }) => api.stopJob(jobID), [
+                ['jobID', 'Job ID'],
+            ]) },
+    { label: 'Rerun Job',          action: () => doWithFields(
+            ({ jobID }) => api.rerunJob(jobID), [
+                ['jobID', 'Job ID'],
+            ]) },
+    { label: 'View Job',           action: () => doWithFields(
+            ({ id }) => api.viewJob(id), [
+                ['id', 'Job ID'],
+            ]) },
     { label: 'List Jobs',          action: () => api.listJobs() },
 
     { label: 'View Credits',       action: () => api.viewCredits() },
@@ -134,12 +141,42 @@ function showMenu (items) {
 }
 
 async function promptField (label, optional = false) {
+    if (label.toLowerCase().includes('password')) {
+        // Hide password input
+        return await promptHidden(label, optional);
+    }
+    if (label === 'Private SSH key') {
+        console.log('Paste your private SSH key below. Type END on a new line when finished:');
+        let lines = [];
+        while (true) {
+            const line = await rl.question('');
+            if (line.trim() === 'END') break;
+            lines.push(line);
+        }
+        const ans = lines.join('\n');
+        if (!ans.trim()) {
+            if (optional) return undefined;
+            throw new Error('Cancelled');
+        }
+        return ans;
+    }
     const ans = await rl.question(`${label}: `);
     if (!ans.trim()) {
         if (optional) return undefined;
         throw new Error('Cancelled');
     }
     return ans.trim();
+}
+
+async function promptHidden(label, optional = false) {
+    const promptSync = (await import('prompt-sync')).default;
+    const prompt = promptSync({ sigint: true });
+    let answer = prompt.hide(`${label}: `);
+    if (!answer.trim()) {
+        if (optional) return undefined;
+        throw new Error('Cancelled');
+    }
+    return answer.trim();
 }
 
 async function doWithFields (fn, fieldDefs) {
