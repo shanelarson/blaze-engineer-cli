@@ -191,7 +191,6 @@ async function promptHidden(label, optional = false) {
         if (optional) return undefined;
         throw new Error('Cancelled');
     }
-    console.log(answer.trim());
     return answer.trim();
 }
 
