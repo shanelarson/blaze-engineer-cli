@@ -146,11 +146,26 @@ async function promptField (label, optional = false) {
         return await promptHidden(label, optional);
     }
     if (label === 'Private SSH key') {
-        console.log('Paste your private SSH key below. Type END on a new line when finished:');
+        console.log('Type/Paste your SSH Private Key line by line. Type END_OF_KEY on a new line when finished:');
         let lines = [];
         while (true) {
             const line = await rl.question('');
-            if (line.trim() === 'END') break;
+            if (line.toLowerCase().trim() === 'end_of_key') break;
+            lines.push(line);
+        }
+        const ans = lines.join('\n');
+        if (!ans.trim()) {
+            if (optional) return undefined;
+            throw new Error('Cancelled');
+        }
+        return ans;
+    }
+    if (label === 'Task') {
+        console.log('Type/Paste your Task line by line. Type END_OF_TASK on a new line when finished:');
+        let lines = [];
+        while (true) {
+            const line = await rl.question('');
+            if (line.toLowerCase().trim() === 'end_of_task') break;
             lines.push(line);
         }
         const ans = lines.join('\n');
@@ -176,6 +191,7 @@ async function promptHidden(label, optional = false) {
         if (optional) return undefined;
         throw new Error('Cancelled');
     }
+    console.log(answer.trim());
     return answer.trim();
 }
 
