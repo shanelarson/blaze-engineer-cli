@@ -100,7 +100,10 @@ const authorizedMenu = [
             ({ id }) => api.viewMasterFile(id), [
                 ['id', 'Master File ID'],
             ]) },
-    { label: 'List Master Files',  action: () => api.listMasterFiles() },
+    { label: 'List Master Files',  action: () => doWithFields(
+            ({ repoID }) => api.listMasterFiles(repoID), [
+                ['repoID', 'Repo ID'],
+            ]) },
 
     // ---- END NEWLY ADDED ENDPOINTS ----
 
