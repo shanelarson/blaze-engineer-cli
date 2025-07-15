@@ -12,7 +12,7 @@ Manage SSH keys, repos, jobs, tokens, master files, and more — all from your t
 - **Manage Repositories** (add, list, remove)
 - **Run, Stop, Rerun, and View Jobs**
 - **View Usage Credits**
-- **Manage Tokens** (add, remove)
+- **Manage Tokens** (add, remove, view, list)
 - **Manage Master Files** (edit, view, list)
 - All via a fast, interactive terminal UI
 
@@ -57,7 +57,7 @@ Once logged in, you can:
 * Add/List/Remove **Repositories**
 * Run/Stop/Rerun/View **Jobs** for your code
 * View your **Credits**
-* Add/Remove **Tokens**
+* Add/Remove/View/List **Tokens**
 * Edit/View/List **Master Files**
 * **Logout**
 
@@ -100,15 +100,17 @@ Authorized Menu
 12) View Credits
 13) Add Token
 14) Remove Token
-15) Edit Master File
-16) View Master File
-17) List Master Files
+15) View Token
+16) List Tokens
+17) Edit Master File
+18) View Master File
+19) List Master Files
 0) Exit
-> 13
-Token nickname: API Access
-{TOKEN RESPONSE}
-> 12
-{VIEW CREDITS RESPONSE}
+> 15
+Token ID: <token-id>
+{VIEW TOKEN RESPONSE}
+> 16
+{LIST TOKENS RESPONSE}
 ```
 
 ---

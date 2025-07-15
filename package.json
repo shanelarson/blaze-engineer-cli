@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/shanelarson/blaze-engineer-cli#readme",
   "dependencies": {
-    "blaze-engineer": "^1.0.3",
+    "blaze-engineer": "^1.0.4",
     "prompt-sync": "^4.2.0"
   }
 }

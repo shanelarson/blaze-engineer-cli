@@ -84,6 +84,11 @@ const authorizedMenu = [
             ({ id }) => api.removeToken(id), [
                 ['id', 'Token ID'],
             ]) },
+    { label: 'View Token',         action: () => doWithFields(
+            ({ id }) => api.viewToken(id), [
+                ['id', 'Token ID'],
+            ]) },
+    { label: 'List Tokens',        action: () => api.listTokens() },
 
     // MasterFiles
     { label: 'Edit Master File',   action: () => doWithFields(
