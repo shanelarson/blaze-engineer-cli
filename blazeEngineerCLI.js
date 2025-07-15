@@ -73,6 +73,32 @@ const authorizedMenu = [
 
     { label: 'View Credits',       action: () => api.viewCredits() },
 
+    // ---- BEGIN NEWLY ADDED ENDPOINTS ----
+
+    // Tokens
+    { label: 'Add Token',          action: () => doWithFields(
+            ({ name }) => api.addToken(name), [
+                ['name', 'Token nickname'],
+            ]) },
+    { label: 'Remove Token',       action: () => doWithFields(
+            ({ id }) => api.removeToken(id), [
+                ['id', 'Token ID'],
+            ]) },
+
+    // MasterFiles
+    { label: 'Edit Master File',   action: () => doWithFields(
+            ({ id, content }) => api.editMasterFile(id, content), [
+                ['id', 'Master File ID'],
+                ['content', 'New Content'],
+            ]) },
+    { label: 'View Master File',   action: () => doWithFields(
+            ({ id }) => api.viewMasterFile(id), [
+                ['id', 'Master File ID'],
+            ]) },
+    { label: 'List Master Files',  action: () => api.listMasterFiles() },
+
+    // ---- END NEWLY ADDED ENDPOINTS ----
+
     { label: 'Logout',             action: logout },
 ];
 
@@ -166,6 +192,21 @@ async function promptField (label, optional = false) {
         while (true) {
             const line = await rl.question('');
             if (line.toLowerCase().trim() === 'end_of_task') break;
+            lines.push(line);
+        }
+        const ans = lines.join('\n');
+        if (!ans.trim()) {
+            if (optional) return undefined;
+            throw new Error('Cancelled');
+        }
+        return ans;
+    }
+    if (label === 'New Content') {
+        console.log('Type/Paste the new content for the Master File line by line. Type END_OF_CONTENT on a new line when finished:');
+        let lines = [];
+        while (true) {
+            const line = await rl.question('');
+            if (line.toLowerCase().trim() === 'end_of_content') break;
             lines.push(line);
         }
         const ans = lines.join('\n');

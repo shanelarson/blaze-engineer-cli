@@ -1,7 +1,7 @@
 # Blaze Engineer CLI
 
-A Command-Line Interface for interacting with [Blaze Engineer](https://api.blaze.engineer), your AI-powered code engineering platform.
-Manage SSH keys, repos, jobs, and more — all from your terminal.
+A Command-Line Interface for interacting with [Blaze Engineer](https://blaze.engineer), your AI-powered code engineering platform.
+Manage SSH keys, repos, jobs, tokens, master files, and more — all from your terminal.
 
 ---
 
@@ -12,6 +12,8 @@ Manage SSH keys, repos, jobs, and more — all from your terminal.
 - **Manage Repositories** (add, list, remove)
 - **Run, Stop, Rerun, and View Jobs**
 - **View Usage Credits**
+- **Manage Tokens** (add, remove)
+- **Manage Master Files** (edit, view, list)
 - All via a fast, interactive terminal UI
 
 ---
@@ -55,6 +57,8 @@ Once logged in, you can:
 * Add/List/Remove **Repositories**
 * Run/Stop/Rerun/View **Jobs** for your code
 * View your **Credits**
+* Add/Remove **Tokens**
+* Edit/View/List **Master Files**
 * **Logout**
 
 #### 3. **Exiting**
@@ -85,11 +89,26 @@ Authorized Menu
 1) Add Key
 2) Remove Key
 3) List Keys
-...
+4) Add Repo
+5) Remove Repo
+6) List Repos
+7) Run Job
+8) Stop Job
+9) Rerun Job
+10) View Job
+11) List Jobs
+12) View Credits
+13) Add Token
+14) Remove Token
+15) Edit Master File
+16) View Master File
+17) List Master Files
 0) Exit
-> 1
-Key nickname: Work Key
-Private SSH key: -----BEGIN OPENSSH PRIVATE KEY-----...
+> 13
+Token nickname: API Access
+{TOKEN RESPONSE}
+> 12
+{VIEW CREDITS RESPONSE}
 ```
 
 ---
@@ -125,8 +144,8 @@ UNLICENSED
 
 ## Links
 
-- [API Homepage](https://api.blaze.engineer)
-- [Getting Started Guide](https://shanelarsonvideos.s3.us-east-1.amazonaws.com/gettingStarted.html)
-- [API Documentation](https://shanelarsonvideos.s3.us-east-1.amazonaws.com/apiDocumentation.html)
+- [API Homepage](https://blaze.engineer)
+- [Getting Started Guide](https://blaze.engineer/gettingStarted)
+- [API Documentation](https://blaze.engineer/apiDocs)
 - [Blaze Engineer JS Client on NPM](https://www.npmjs.com/package/blaze-engineer)
 - [Blaze Engineer JS Client on GitHub](https://github.com/shanelarson/blaze-engineer)
