@@ -174,25 +174,13 @@ function showMenu (items) {
     console.log('0) Exit');
 }
 
-async function promptField (label, optional = false) {
+async function promptField(label, optional = false) {
     if (label.toLowerCase().includes('password')) {
         // Hide password input
         return await promptHidden(label, optional);
     }
     if (label === 'Private SSH key') {
-        console.log('Type/Paste your SSH Private Key line by line. Type END_OF_KEY on a new line when finished:');
-        let lines = [];
-        while (true) {
-            const line = await rl.question('');
-            if (line.toLowerCase().trim() === 'end_of_key') break;
-            lines.push(line);
-        }
-        const ans = lines.join('\n');
-        if (!ans.trim()) {
-            if (optional) return undefined;
-            throw new Error('Cancelled');
-        }
-        return ans;
+        return await readSshKey({ optional }) ;
     }
     if (label === 'Task') {
         console.log('Type/Paste your Task line by line. Type END_OF_TASK on a new line when finished:');
@@ -259,6 +247,43 @@ async function doWithFields (fn, fieldDefs) {
         }
         throw e;
     }
+}
+
+async function readSshKey({ optional = false } = {}) {
+  const SENTINEL = 'END_OF_KEY';
+  console.log(
+    'Paste your SSH private key. ' +
+    `When finished, type ${SENTINEL} on its own line and press Enter:`
+  );
+
+  // Create a readline that DOES NOT echo back what you type
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: null,      // disable automatic input echoing
+    terminal: false,   // treat input purely as text
+  });
+
+  const lines = [];
+  for await (const line of rl) {
+    if (line.trim() === SENTINEL) {
+      rl.close();
+      break;
+    }
+    lines.push(line);
+  }
+
+  // Normalize Windows CRLF → LF and trim stray blank lines
+  const key = lines
+    .join('\n')
+    .replace(/\r\n/g, '\n')
+    .trim();
+
+  if (!key) {
+    if (optional) return undefined;
+    throw new Error('Cancelled: no SSH key provided.');
+  }
+
+  return key;
 }
 
 async function signup () {
