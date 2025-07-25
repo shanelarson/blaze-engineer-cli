@@ -5,7 +5,6 @@ import BlazeEngineer from 'blaze-engineer';
 import readline from 'readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import util from 'node:util';
-import { read } from 'node:fs';
 
 const rl  = readline.createInterface({ input, output });
 const api = new BlazeEngineer();
