@@ -2,6 +2,17 @@
   "name": "blaze-engineer-cli",
   "version": "1.0.8",
   "description": "An interactive NodeJS CLI Tool for interacting with Blaze Engineer API.",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "nodejs",
+    "ai",
+    "ai coding",
+    "vibe coding",
+    "automated coding",
+    "coding agent",
+    "ai software engineer"
+  ],
   "main": "blazeEngineerCLI.js",
   "bin": {
     "blaze-engineer-cli": "./blazeEngineerCLI.js"
