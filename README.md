@@ -1,6 +1,6 @@
 # Blaze Engineer CLI
 
-A Command-Line Interface for interacting with [Blaze Engineer](https://blaze.engineer), your AI-powered code engineering platform.
+A Command-Line Interface for interacting with [Blaze Engineer - API](https://blaze.engineer), your AI-powered code engineering platform.
 Manage SSH keys, repos, jobs, tokens, master files, and more — all from your terminal.
 
 ---
@@ -20,7 +20,7 @@ Manage SSH keys, repos, jobs, tokens, master files, and more — all from your t
 
 ## Installation
 
-Install globally using [npm](https://www.npmjs.com/):
+Install globally using npm:
 
 ```sh
 npm install -g blaze-engineer-cli
@@ -146,8 +146,10 @@ UNLICENSED
 
 ## Links
 
-- [API Homepage](https://blaze.engineer)
-- [Getting Started Guide](https://blaze.engineer/gettingStarted)
-- [API Documentation](https://blaze.engineer/apiDocs)
-- [Blaze Engineer JS Client on NPM](https://www.npmjs.com/package/blaze-engineer)
-- [Blaze Engineer JS Client on GitHub](https://github.com/shanelarson/blaze-engineer)
+- [Blaze Engineer - Homepage](https://blaze.engineer)
+- [Blaze Engineer - Getting Started Guide](https://blaze.engineer/gettingStarted)
+- [Blaze Engineer - API Documentation](https://blaze.engineer/apiDocs)
+- [Blaze Engineer - API Playground](https://blaze.engineer/apiPlayground)
+- [Blaze Engineer - Writing Good Tasks Guide](https://blaze.engineer/apiDocs)
+- [Blaze Engineer - NodeJS Client on NPM](https://www.npmjs.com/package/blaze-engineer)
+- [Blaze Engineer - NodeJS Client on GitHub](https://github.com/shanelarson/blaze-engineer)
